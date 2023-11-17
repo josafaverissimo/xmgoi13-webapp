@@ -1,0 +1,15 @@
+{
+    "name": "kiris/xmgoi13-webapp-backend",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Josafá Veríssimo Gomes",
+            "email": "josafaverissimo98@gmail.com"
+        }
+    ],
+    "require": {}
+}

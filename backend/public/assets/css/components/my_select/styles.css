@@ -1,0 +1,12 @@
+.my-select select {
+    display: none;
+}
+
+.my-select ul ul {
+    height: 250px;
+    overflow-y: auto;
+}
+
+.my-select button {
+    min-width: 11rem;
+}
