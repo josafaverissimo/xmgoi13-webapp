@@ -1,0 +1,31 @@
+<div class="main-form">
+  <div style="display: flex; flex-direction: column; align-items: stretch">
+    <mat-form-field appearance="outline">
+      <mat-label>CNPJ</mat-label>
+      <input matInput mask="00.000.000/0000-00" name="cnpj">
+      <mat-icon matSuffix>description</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Mercadoria</mat-label>
+        <input matInput name="productId" [(ngModel)]="productIdInput" [matAutocomplete]="autocompleteProducts">
+        <mat-icon matSuffix>inventory</mat-icon>
+
+        <mat-autocomplete #autocompleteProducts="matAutocomplete">
+          <mat-option
+            value="5430"
+          >
+            Ola
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <div style="align-self: center">
+      <p class="barcode" style="margin: 0">*{{productIdInput}}*</p>
+    </div>
+  </div>
+</div>

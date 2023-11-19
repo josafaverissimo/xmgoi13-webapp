@@ -1,0 +1,10 @@
+.main-form {
+  display: flex;
+  flex-direction: column;
+  padding: 25px 0;
+}
+
+.barcode {
+  font-size: 3em;
+  font-family: '3of9Barcode';
+}
