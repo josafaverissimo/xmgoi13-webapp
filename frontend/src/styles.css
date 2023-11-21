@@ -5,3 +5,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-family: '3of9Barcode';
   src: url('./assets/fonts/3OF9_NEW.TTF') format('truetype');
 }
+
+.page-title {
+  font-weight: lighter;
+  font-size: 3rem;
+  font-style: italic;
+  border-bottom: 1px solid #0003
+}

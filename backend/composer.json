@@ -3,7 +3,11 @@
     "autoload": {
         "psr-4": {
             "Src\\": "src/"
-        }
+        },
+        "files": [
+            "src/Core/config.php",
+            "src/Utils/Helpers.php"
+        ]
     },
     "authors": [
         {
@@ -11,5 +15,8 @@
             "email": "josafaverissimo98@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+      "ext-json": "*",
+      "ext-pdo": "*"
+    }
 }

@@ -24,4 +24,9 @@ abstract class Controller
         $view = new View();
         $view->render($path, $data);
     }
+
+    protected function output($data): void
+    {
+        echo json_encode($data);
+    }
 }

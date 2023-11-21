@@ -6,9 +6,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { XmgoiPageComponent } from './components/xmgoi/xmgoi-page/xmgoi-page.component';
 import { XmgoiFormComponent } from "./components/xmgoi/xmgoi-form/xmgoi-form.component";
-import {HeaderComponent} from "./components/header/header.component";
+import { HeaderComponent } from "./components/header/header.component";
 import { CustomersPageComponent } from './components/customers/customers-page/customers-page.component';
 import { XmgoiDatabaseManagerComponent } from './components/xmgoi/xmgoi-database-manager/xmgoi-database-manager.component';
+import { MyFileUploadComponent } from "./components/my-file-upload/my-file-upload.component";
+import { MyTableComponent } from "./components/my-table/my-table.component";
 
 
 
@@ -25,7 +27,9 @@ import { XmgoiDatabaseManagerComponent } from './components/xmgoi/xmgoi-database
     BrowserAnimationsModule,
     FormsModule,
     XmgoiFormComponent,
-    HeaderComponent
+    HeaderComponent,
+    MyFileUploadComponent,
+    MyTableComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

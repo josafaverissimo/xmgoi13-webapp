@@ -121,7 +121,7 @@ final class Sql
         return $success ?? false;
     }
 
-    public function fetch(string $class = "StdClass"): mixed
+    public function fetch(string $class = "StdClass")
     {
         $this->statement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
         return $this->statement->fetch();

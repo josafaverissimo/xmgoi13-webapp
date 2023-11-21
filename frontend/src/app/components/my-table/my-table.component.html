@@ -1,0 +1,41 @@
+<div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="productCode">
+      <th mat-header-cell *matHeaderCellDef>Mercadoria</th>
+      <td mat-cell *matCellDef="let element">{{element.productCode}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="productDigit">
+      <th mat-header-cell *matHeaderCellDef>Dígito</th>
+      <td mat-cell *matCellDef="let element">{{element.productDigit}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="productDescription">
+      <th mat-header-cell *matHeaderCellDef>Descrição</th>
+      <td mat-cell *matCellDef="let element">{{element.productDescription}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="productPacking">
+      <th mat-header-cell *matHeaderCellDef>Embalagem</th>
+      <td mat-cell *matCellDef="let element">{{element.productPacking}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="productStockEmb1">
+      <th mat-header-cell *matHeaderCellDef>Estoque Emb1</th>
+      <td mat-cell *matCellDef="let element">{{element.productStockEmb1}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="productStockEmb9">
+      <th mat-header-cell *matHeaderCellDef>Estoque Emb9</th>
+      <td mat-cell *matCellDef="let element">{{element.productStockEmb9}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="productSalePrice">
+      <th mat-header-cell *matHeaderCellDef>Preço de venda</th>
+      <td mat-cell *matCellDef="let element">{{element.productSalePrice}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

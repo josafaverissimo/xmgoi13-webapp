@@ -6,15 +6,20 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit096f8472aca22f5aff87570b621629a5
 {
+    public static $files = array (
+        'ec5bd4010d98b5d49a43026cddb37940' => __DIR__ . '/../..' . '/src/Core/config.php',
+        'fdf896cb27c12f1a8bcec7f7b31bfa80' => __DIR__ . '/../..' . '/src/Utils/Helpers.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
-        'K' => 
+        'S' => 
         array (
-            'Kiris\\Xmgoi13WebappBackend\\' => 27,
+            'Src\\' => 4,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Kiris\\Xmgoi13WebappBackend\\' => 
+        'Src\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

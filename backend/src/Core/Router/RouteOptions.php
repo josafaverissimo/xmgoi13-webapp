@@ -17,7 +17,7 @@ class RouteOptions
             if(isset($this->options[$key])) {
                 switch ($key) {
                     case "prefix":
-                        if (str_contains($this->options["prefix"], $value)) {
+                        if (strpos($this->options["prefix"], $value) !== false) {
                             $this->options["prefix"] = str_replace(
                                 "/{$value}",
                                 "",
@@ -78,7 +78,7 @@ class RouteOptions
         return !empty($this->options[$option]);
     }
 
-    public function get(string $option): mixed
+    public function get(string $option)
     {
         return $this->options[$option];
     }

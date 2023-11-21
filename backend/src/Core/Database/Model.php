@@ -1,16 +1,15 @@
 <?php
 
 namespace Src\Core\Database;
-use Src\Interfaces\Database\IOrm;
 use Src\Interfaces\Database\IModel;
 
-abstract class Model implements IModel
+abstract class Model
 {
     protected Sql $sql;
     protected string $table;
-    protected ?IOrm $orm;
+    protected ?Orm $orm;
 
-    public function __construct(string $table, ?IOrm $orm = null)
+    public function __construct(string $table, ?Orm $orm = null)
     {
         $this->sql = new Sql();
         $this->table = $table;
@@ -67,7 +66,7 @@ abstract class Model implements IModel
         return $this->sql->fetchAll($class);
     }
 
-    public function getBy(string $columnAndComparison, string $value): ?IOrm
+    public function getBy(string $columnAndComparison, string $value): ?Orm
     {
         $where = [
             "comparison" => $columnAndComparison,

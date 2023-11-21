@@ -26,5 +26,5 @@ export class HeaderComponent {
     {name: 'Clientes', target: 'customers'},
     {name: 'Base de dados', target: 'database'}
   ]
-  activeLink = this.links[0].name
+  activeLink = this.links[2].name
 }
