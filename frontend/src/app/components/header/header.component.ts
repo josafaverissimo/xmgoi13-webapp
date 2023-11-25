@@ -26,5 +26,5 @@ export class HeaderComponent {
     {name: 'Clientes', target: 'customers'},
     {name: 'Base de dados', target: 'database'}
   ]
-  activeLink = this.links[2].name
+  activeLink = window.location.pathname.replace('/', '')
 }

@@ -28,7 +28,7 @@ abstract class Model
 
     public function getLastQuery(): string
     {
-        return $this->sql->getQuery();
+        return $this->sql->getLastQuery();
     }
 
     public function getError(): array
@@ -41,10 +41,31 @@ abstract class Model
         return !empty($this->getError()[2]);
     }
 
-    public function getAll(array $options = []): array
+    public function getAll(array $options = [], string $columns = ''): array
     {
-        $this->sql->select($this->table);
+        if(!empty($columns)) {
+            $this->sql->select($this->table, $columns);
+        } else {
+            $this->sql->select($this->table);
+        }
+
         if(!empty($options)) {
+            if(!empty($options["where"])) {
+                if(!empty($options["multipleWhere"])) {
+                    foreach($options["where"] as $where) {
+                        $comparison = $where["comparison"];
+                        $value = $where["value"];
+                        $operator = $where["operator"] ?? "";
+                        $this->sql->where($comparison, $value, $operator);
+                    }
+                } else {
+                    $comparison = $options["where"]["comparison"];
+                    $value = $options["where"]["value"];
+                    $operator = $options["where"]["operator"] ?? "";
+                    $this->sql->where($comparison, $value, $operator);
+                }
+            }
+
             if(!empty($options["orderBy"])) {
                 $this->sql->orderBy($options["orderBy"]);
             }
@@ -52,18 +73,17 @@ abstract class Model
             if(!empty($options["limit"])) {
                 $this->sql->limit($options["limit"]);
             }
-
-            if(!empty($options["where"])) {
-                $comparison = $options["where"]["comparison"];
-                $value = $options["where"]["value"];
-                $operator = $options["where"]["operator"] ?? "";
-                $this->sql->where($comparison, $value, $operator);
-            }
         }
         $this->sql->execute();
 
         $class = $this->orm ? get_class($this->orm) : "StdClass";
         return $this->sql->fetchAll($class);
+    }
+
+    public function getTotalRows(array $options = []): int
+    {
+        unset($options['limit']);
+        return $this->getAll($options, 'count(*) as total')[0]->total;
     }
 
     public function getBy(string $columnAndComparison, string $value): ?Orm

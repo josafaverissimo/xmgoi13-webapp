@@ -27,7 +27,10 @@ class Smg13ColumnsToPersist
         return array_reduce($this->rows, function($rows, $row) {
             $rowsFiltered = array_reduce(array_keys($this->columnsToPersist), function($columns, $column) use ($row) {
                 $columnTarget = $this->columnsToPersist[$column]["index"];
-                $cell = preg_replace("/ +/", " ", trim($row[$columnTarget]));
+                $cell = mb_convert_case(
+                    preg_replace("/ +/", " ", trim($row[$columnTarget])),
+                    MB_CASE_LOWER
+                );
 
                 if(isset($this->columnsToPersist[$column]["formatValue"])) {
                     $cell = $this->columnsToPersist[$column]["formatValue"]($cell);

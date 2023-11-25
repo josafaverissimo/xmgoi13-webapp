@@ -9,6 +9,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .page-title {
   font-weight: lighter;
   font-size: 3rem;
-  font-style: italic;
   border-bottom: 1px solid #0003
+}
+
+.content {
+  padding-bottom: 15px;
 }

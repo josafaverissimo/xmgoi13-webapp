@@ -1,9 +1,6 @@
 <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
 
-<div class="file-upload" (click)="fileUpload.click()">
-  {{filename || "Selecione um arquivo"}}
-
-  <button mat-mini-fab color="primary" class="upload-btn">
-    <mat-icon>attach_file</mat-icon>
-  </button>
+<div class="file-upload" (click)="fileUpload.click()" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+  <p class="title">{{file?.name || "Selecione um arquivo ou arraste e solte"}}</p>
+  <span class="subtitle">{{getFileSizeMBFormatted()}}</span>
 </div>

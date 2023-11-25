@@ -64,14 +64,62 @@ class Smgoi13 extends Controller
         return $this->smg13ColumnsToPersist->getSmg13Data();
     }
 
-    public function getAll(int $offset): void {
-        $rowCount = 25;
-
-        $this->output(array_map(function(Orm $orm) {
-            return $orm->getRow();
-        }, $this->smgoi13Model->getAll([
+    public function getAll(int $offset, int $rowCount = 25): void {
+        $smg13QueryOptions = [
+            'count' => true,
             'limit' => "{$rowCount} OFFSET {$offset}"
-        ])));
+        ];
+        $term = filter_input(INPUT_GET, 'term');
+
+        if(!empty($term)) {
+            $smg13QueryOptions["multipleWhere"] = true;
+            $smg13QueryOptions['where'] = [
+                [
+                    "comparison" => "productCode like ",
+                    "value" => "%{$term}%",
+                    "operator" => "OR"
+                ],
+                [
+                    "comparison" => "productDescription like ",
+                    "value" => "%{$term}%",
+                    "operator" => "OR"
+                ],
+                [
+                    "comparison" => "productDigit like ",
+                    "value" => "%{$term}%",
+                    "operator" => "OR"
+                ],
+                [
+                    "comparison" => "productPacking like ",
+                    "value" => "%{$term}%",
+                    "operator" => "OR"
+                ],
+                [
+                    "comparison" => "productStockEmb1 like ",
+                    "value" => "%{$term}%",
+                    "operator" => "OR"
+                ],
+                [
+                    "comparison" => "productStockEmb9 like ",
+                    "value" => "%{$term}%",
+                    "operator" => "OR"
+                ],
+                [
+                    "comparison" => "productSalePrice like ",
+                    "value" => "%{$term}%"
+                ]
+            ];
+        }
+
+        $smg13Data = array_map(function(Orm $orm) {
+            return $orm->getRow();
+        }, $this->smgoi13Model->getAll($smg13QueryOptions));
+        $smg13TotalRows = $this->smgoi13Model->getTotalRows($smg13QueryOptions);
+
+        $this->output([
+            'totalRows' => $smg13TotalRows,
+            'data' => $smg13Data
+        ]);
     }
 
     public function update(): void
@@ -88,12 +136,23 @@ class Smgoi13 extends Controller
 
         $this->smgoi13Model->truncate();
 
+        $errors = [];
+
         foreach($smg13Data as $row) {
             $this->smgoi13Model->push($row);
+            $error = $this->smgoi13Model->getError();
+
+            if(!empty($error[1])) {
+                $errors[] = [
+                    "row" => $row,
+                    "errorInfo" => $error
+                ];
+            }
         }
 
         $this->output([
-            "error" => false
+            "error" => false,
+            "errors" => $errors
         ]);
     }
 }

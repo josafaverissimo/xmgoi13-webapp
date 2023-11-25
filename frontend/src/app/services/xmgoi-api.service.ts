@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+import {TableDataInterface} from "../components/my-table/my-table.component";
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,15 @@ export class XmgoiApiService {
     return this.http.post(url, formData)
   }
 
-  getSmgoi13Data(offset: number): Observable<Smg13RowInterface[]> {
-    const url = this.getUrl(`smgoi13/getAll/${offset}`)
+  getSmgoi13Data(offset: number, rowsCount: number, term: string|undefined): Observable<TableDataInterface> {
+    let url = this.getUrl(`smgoi13/getAll/${offset}/${rowsCount}`)
 
-    return this.http.get<Smg13RowInterface[]>(url)
+    if(term) {
+      url += `?term=${term.toLocaleLowerCase()}`
+    }
+
+
+    return this.http.get<TableDataInterface>(url)
   }
 }
 

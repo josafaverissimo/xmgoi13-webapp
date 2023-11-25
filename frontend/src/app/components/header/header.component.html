@@ -8,8 +8,8 @@
       <a *ngFor="let link of links"
         mat-tab-link
         [routerLink]="link.target"
-        (click)="activeLink = link.name"
-        [active]="activeLink === link.name"
+        (click)="activeLink = link.target"
+        [active]="activeLink === link.target"
       >
         {{link.name}}
       </a>

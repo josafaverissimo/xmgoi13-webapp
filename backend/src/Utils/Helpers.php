@@ -18,21 +18,6 @@ final class Helpers
         return CONF_BASE_URL . self::replaceMultiples($subpath, "\\/", "/");
     }
 
-    public static function baseDatasetPath(string $subpath): string
-    {
-        return CONF_BASE_DATASET_PATH . self::replaceMultiples("/{$subpath}", "\\/", "/");
-    }
-
-    public static function baseSaveReportsUrl(string $subpath): string
-    {
-        return CONF_BASE_SAVE_REPORTS_URL . self::replaceMultiples($subpath, "\\/", "/");
-    }
-
-    public static function baseViewPath(string $subpath = ""): string
-    {
-        return CONF_BASE_VIEW_PATH . self::replaceMultiples("/{$subpath}", "\\/", "/");
-    }
-
     public static function minify(string $string): string
     {
         return preg_replace(
@@ -75,24 +60,6 @@ final class Helpers
         echo "</script>";
     }
 
-    public static function getDatasetFile(string $subpath): ?string
-    {
-        $filePath = Helpers::baseDatasetPath("/{$subpath}");
-        $fileStream = fopen($filePath, "rb");
-
-        if($fileStream === false) {
-            return null;
-        }
-
-        $fileData = "";
-
-        while(!feof($fileStream)) {
-            $fileData .= fread($fileStream, 4096);
-        }
-
-        return $fileData;
-    }
-
     public static function dateBr(string $date): string
     {
         return date("d/m/Y", strtotime($date));
@@ -107,7 +74,7 @@ final class Helpers
         );
     }
 
-    public static function filterInputArray(int $input = INPUT_POST): array
+    public static function filterInputArray(int $input = INPUT_POST): ?array
     {
         return filter_input_array($input, FILTER_SANITIZE_SPECIAL_CHARS);
     }

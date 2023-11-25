@@ -1,27 +1,62 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from "@angular/material/icon";
-import { MatButtonModule } from "@angular/material/button";
-import { HttpClientModule } from '@angular/common/http'
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-my-file-upload',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule],
   templateUrl: './my-file-upload.component.html',
   styleUrl: './my-file-upload.component.css'
 })
 export class MyFileUploadComponent {
   @Output() changeFile: EventEmitter<any> = new EventEmitter()
-  filename: string = ''
+  file!: File
+
+  constructor(private snackBar: MatSnackBar) {}
+
+  private changeFilenameAndEmitEvent(file: File): void {
+    if(!file) {
+      this.snackBar.open('O arquivo não foi enviado :(', 'Fechar', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 4000
+      })
+      return
+    }
+
+    this.file = file
+    this.changeFile.emit(file)
+  }
+
+  private getFileSizeMB(): number|undefined {
+    return this.file?.size / 1024 / 1024
+  }
+
+  getFileSizeMBFormatted(): string|undefined {
+    const fileSizeMB = this.getFileSizeMB()
+
+    return fileSizeMB ? `${fileSizeMB.toFixed(2)}MB` : ''
+  }
+
+  onDrop(event: any) {
+    event.preventDefault()
+
+    const file = event.dataTransfer.files[0]
+
+    this.changeFilenameAndEmitEvent(file)
+  }
+
+  onDragOver(event: any) {
+    event.stopPropagation()
+    event.preventDefault()
+  }
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0]
 
-    if(file) {
-      this.filename = file.name
-
-      this.changeFile.emit(file)
-    }
+    this.changeFilenameAndEmitEvent(file)
   }
+
+  protected readonly ondragover = ondragover;
 }

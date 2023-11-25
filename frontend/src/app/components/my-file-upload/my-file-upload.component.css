@@ -3,5 +3,23 @@
 }
 
 .file-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: pointer;
+  border: 5px dashed #8889;
+  border-radius: 30px;
+  padding: 15px 0;
+}
+
+.file-upload .title {
+  font-size: 1.4rem;
+  color: #555;
+  margin: 0;
+}
+
+.file-upload .subtitle {
+  font-size: 0.9rem;
+  color: #777;
+  font-style: italic;
 }

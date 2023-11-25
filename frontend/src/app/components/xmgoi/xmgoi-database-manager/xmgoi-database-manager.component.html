@@ -1,7 +1,21 @@
 <h1 class="page-title">Base de Dados</h1>
 
-<form>
-  <app-my-file-upload (changeFile)="onChangeFile($event)" />
-</form>
+<div class="content">
+  <form (ngSubmit)="submitForm()">
+    <app-my-file-upload style="align-self: stretch;" (changeFile)="onChangeFile($event)" />
 
-<app-my-table />
+    <button type="submit" mat-fab color="primary">
+      <mat-icon>send</mat-icon>
+      <mat-spinner strokeWidth="4" *ngIf="isSmg13Uploading"></mat-spinner>
+    </button>
+  </form>
+
+  <app-my-table
+    (changePage)="smg13TableChangePage($event)"
+    (searchTerm)="smg13TableSearchTerm($event)"
+    [itemsPerPage]="smg13TableItemsPerPage"
+    [displayedColumns]="smg13TableColumns"
+    [dataSource]="smg13TableData"
+    [isLoading]="smg13TableIsLoading"
+  />
+</div>
