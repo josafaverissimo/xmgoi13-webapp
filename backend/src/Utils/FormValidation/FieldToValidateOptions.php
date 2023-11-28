@@ -4,19 +4,27 @@ namespace Src\Utils\FormValidation;
 
 class FieldToValidateOptions
 {
+    private array $optionsValuesByOptionName = [];
+
     private ?bool $isRequired;
     private ?int $length;
     private ?int $minLength;
     private ?int $maxLength;
-    private ?bool $isPhone;
-    private ?bool $isCnpj;
+    private ?bool $isEmail;
     private array $setValueByOption;
 
-
-    public function __construct(string $options) {
+    public function __construct(string $options = '') {
         $this->initSetValueByOption();
         $this->initOptions();
         $this->setOptions($options);
+
+        $this->optionsValuesByOptionName = [
+            'required' => $this->isRequired,
+            'length' => $this->length,
+            'minLength' => $this->minLength,
+            'maxLength' => $this->maxLength,
+            'isEmail' => $this->isEmail
+        ];
     }
 
     private function initSetValueByOption(): void
@@ -26,8 +34,7 @@ class FieldToValidateOptions
             "length" => fn($length) => $this->length = $length,
             "minLength" => fn($minLength) => $this->minLength = $minLength,
             "maxLength" => fn($maxLength) => $this->maxLength = $maxLength,
-            "isPhone" => fn() => $this->isPhone = true,
-            "isCnpj" => fn() => $this->isCnpj = true
+            "isEmail" => fn() => $this->isEmail = true
         ];
     }
 
@@ -37,12 +44,13 @@ class FieldToValidateOptions
         $this->length = null;
         $this->minLength = null;
         $this->maxLength = null;
-        $this->isPhone = null;
-        $this->isCnpj = null;
+        $this->isEmail = null;
     }
 
     public function setOptions(string $options): void
     {
+        if(empty($options)) return;
+
         $explodedOptions = explode('|', $options);
 
         foreach($explodedOptions as $option) {
@@ -54,33 +62,7 @@ class FieldToValidateOptions
         }
     }
 
-    public function getIsRequired(): ?bool
-    {
-        return $this->isRequired;
-    }
-
-    public function getLength(): ?int
-    {
-        return $this->length;
-    }
-
-    public function getMinLength(): ?int
-    {
-        return $this->minLength;
-    }
-
-    public function getMaxLength(): ?int
-    {
-        return $this->maxLength;
-    }
-
-    public function getIsPhone(): ?bool
-    {
-        return $this->isPhone;
-    }
-
-    public function getIsCnpj(): ?bool
-    {
-        return $this->isCnpj;
+    public function getOption(string $option) {
+        return $this->optionsValuesByOptionName[$option] ?? null;
     }
 }

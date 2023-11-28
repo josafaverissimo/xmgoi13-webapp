@@ -12,6 +12,7 @@ import { XmgoiDatabaseManagerComponent } from './components/xmgoi/xmgoi-database
 import { MyFileUploadComponent } from "./components/my-file-upload/my-file-upload.component";
 import { MyTableComponent } from "./components/my-table/my-table.component";
 import { HttpClientModule } from '@angular/common/http'
+import {CustomersFormComponent} from "./components/customers/customers-form/customers-form.component";
 
 @NgModule({
   declarations: [
@@ -19,18 +20,19 @@ import { HttpClientModule } from '@angular/common/http'
     XmgoiPageComponent,
     CustomersPageComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    XmgoiFormComponent,
-    HeaderComponent,
-    HttpClientModule,
-    MyFileUploadComponent,
-    MyTableComponent,
-    XmgoiDatabaseManagerComponent
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        XmgoiFormComponent,
+        HeaderComponent,
+        HttpClientModule,
+        MyFileUploadComponent,
+        MyTableComponent,
+        XmgoiDatabaseManagerComponent,
+        CustomersFormComponent
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

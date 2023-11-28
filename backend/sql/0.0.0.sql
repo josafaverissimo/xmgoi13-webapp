@@ -26,7 +26,7 @@ create table xmg_customers (
     socialReason varchar(200),
     cnpj varchar(14),
     phone varchar(11),
-    email varchar(11),
+    email varchar(200),
     createdAt datetime,
     lastPurchaseDay datetime
 );

@@ -8,7 +8,7 @@ class FieldToValidate
     private string $value;
     private FieldToValidateOptions $options;
 
-    public function __construct(string $name, string $options) {
+    public function __construct(string $name, string $options = '') {
         $this->name = $name;
         $this->options = new FieldToValidateOptions($options);
     }
@@ -25,12 +25,15 @@ class FieldToValidate
 
     public function isRequired(): bool
     {
-        return empty($this->options->getIsRequired());
+        $isRequired = $this->options->getOption('required');
+
+        return $isRequired ?? false;
     }
 
-    public function checkLength(): bool
+    public function validateLength(): bool
     {
-        $optionLength = $this->options->getLength();
+
+        $optionLength = $this->options->getOption('length');
 
         if(!empty($optionLength)) {
             return mb_strlen($this->value) === $optionLength;
@@ -39,32 +42,40 @@ class FieldToValidate
         return true;
     }
 
-    public function checkMinLength(): bool
+    public function validateMinLength(): bool
     {
-        $optionMinLength = $this->options->getMinLength();
+        $optionMinLength = $this->options->getOption('minLength');
 
         if(!empty($optionMinLength)) {
-            return mb_strlen($this->value) <= $optionMinLength;
+            return $optionMinLength <= mb_strlen($this->value);
         }
 
         return true;
     }
 
-    public function checkMaxLength(): bool
+    public function validateMaxLength(): bool
     {
-        $optionMaxLength = $this->options->getMinLength();
+        $optionMaxLength = $this->options->getOption('maxLength');
 
         if(!empty($optionMaxLength)) {
-            return mb_strlen($this->value) >= $optionMaxLength;
+            return $optionMaxLength >= mb_strlen($this->value);
         }
 
         return true;
     }
 
-    public function isPhone(): bool
+    public function validateEmail(): bool
     {
-        if(!empty($this->options->getIsPhone())) {
-            
+        $optionIsEmail = $this->options->getOption('isEmail');
+
+        if(!empty($optionIsEmail)) {
+            return filter_var($this->value, FILTER_VALIDATE_EMAIL) !== false;
         }
+
+        return true;
+    }
+
+    public function getOptionValue($option) {
+        return $this->options->getOption($option);
     }
 }

@@ -34,6 +34,12 @@ export class XmgoiApiService {
 
     return this.http.get<TableDataInterface>(url)
   }
+
+  createCustomer(customerData: FormData): Observable<any> {
+    const url = this.getUrl('customers/create')
+
+    return this.http.post<any>(url, customerData)
+  }
 }
 
 export interface Smg13RowInterface {

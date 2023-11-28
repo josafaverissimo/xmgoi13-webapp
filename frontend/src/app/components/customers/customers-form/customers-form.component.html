@@ -1,0 +1,54 @@
+<div class="container">
+  <form (ngSubmit)="customerFormSubmit()">
+    <div class="inputs-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>Nome do cliente</mat-label>
+          <input [(ngModel)]="customerFieldsValues.name" type="text" matInput name="name">
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Razão Social</mat-label>
+          <input [(ngModel)]="customerFieldsValues.socialReason" type="text" matInput name="socialReason">
+          <mat-icon matSuffix>apartment</mat-icon>
+        </mat-form-field>
+    </div>
+
+    <div class="inputs-wrapper">
+      <mat-form-field appearance="outline">
+        <mat-label>Cnpj</mat-label>
+        <input [(ngModel)]="customerFieldsValues.cnpj" type="text" matInput name="cnpj" mask="00.000.000/0000-00">
+        <mat-icon matSuffix>badge</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Telefone</mat-label>
+        <input [(ngModel)]="customerFieldsValues.phone"
+          type="text"
+          matInput
+          name="phone"
+          mask="(00) 0 0000-0000||(00) 0000-0000"
+        >
+        <mat-icon matSuffix>smartphone</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          [(ngModel)]="customerFieldsValues.email"
+          type="text"
+          matInput
+          name="email"
+          mask="A*@A*.AAA.SS||A*@A*.AAA"
+          [validation]="false"
+          [dropSpecialCharacters]="false"
+        >
+        <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="submit-button-wrapper">
+      <button type="submit" mat-raised-button color="primary" [class.spinner]="waitingResponse" [disabled]="waitingResponse">Salvar</button>
+    </div>
+  </form>
+</div>
