@@ -7,6 +7,7 @@ use Src\Core\Controller;
 use Src\Utils\FormValidation\FieldToValidate;
 use Src\Utils\FormValidation\FormValidation;
 use Src\Utils\Helpers;
+use Src\Core\Database\Orm;
 
 class Customers extends Controller
 {
@@ -34,6 +35,16 @@ class Customers extends Controller
         return $this->formValidation->validate();
     }
 
+    public function getAll(): void
+    {
+        $customersData = array_map(function(Orm $orm) {
+            return $orm->getRow();
+        }, $this->customerModel->getAll());
+
+
+        $this->output($customersData);
+    }
+
     public function create(): void
     {
         $postData = Helpers::filterInputArray();
@@ -50,7 +61,10 @@ class Customers extends Controller
         $isCustomerDataValid = $this->validateCustomerData($postData);
 
         if(!$isCustomerDataValid) {
-            $this->output($this->formValidation->getErrorMessages());
+            $this->output([
+                'error' => true,
+                'formValidation' => $this->formValidation->getErrorMessages()
+            ]);
 
             return;
         }

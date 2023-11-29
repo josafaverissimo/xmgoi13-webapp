@@ -35,6 +35,18 @@ export class XmgoiApiService {
     return this.http.get<TableDataInterface>(url)
   }
 
+  getProductDataByCode(productCode: string): Observable<Smg13RowInterface> {
+    const url = this.getUrl(`smgoi13/getByProductCode/${productCode}`)
+
+    return this.http.get<Smg13RowInterface>(url)
+  }
+
+  getCustomersData(): Observable<CustomerRowInterface[]> {
+    const url = this.getUrl('customers/getAll')
+
+    return this.http.get<CustomerRowInterface[]>(url)
+  }
+
   createCustomer(customerData: FormData): Observable<any> {
     const url = this.getUrl('customers/create')
 
@@ -43,12 +55,23 @@ export class XmgoiApiService {
 }
 
 export interface Smg13RowInterface {
-  id: number;
-  productCode: number;
-  productDigit: number;
+  id: string;
+  productCode: string;
+  productDigit: string;
   productDescription: string;
   productPacking: string;
-  productStockEmb1: number;
-  productStockEmb9: number;
-  productSalePrice: number;
+  productStockEmb1: string;
+  productStockEmb9: string;
+  productSalePrice: string;
+}
+
+export interface CustomerRowInterface {
+  id: number;
+  name: string;
+  socialReason: string;
+  cnpj: string;
+  phone: string;
+  email: string;
+  createdAt: string;
+  lastPurchaseDay: string;
 }

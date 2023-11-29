@@ -1,31 +1,30 @@
-<div class="main-form">
-  <div style="display: flex; flex-direction: column; align-items: stretch">
-    <mat-form-field appearance="outline">
-      <mat-label>CNPJ</mat-label>
-      <input matInput mask="00.000.000/0000-00" name="cnpj">
-      <mat-icon matSuffix>badge</mat-icon>
-    </mat-form-field>
-  </div>
-
-  <div>
-    <div>
+<div class="container">
+  <form (ngSubmit)="formSubmitHandler()">
+    <div class="inputs-wrapper">
       <mat-form-field appearance="outline">
-        <mat-label>Mercadoria</mat-label>
-        <input matInput name="productId" [(ngModel)]="productIdInput" [matAutocomplete]="autocompleteProducts">
-        <mat-icon matSuffix>inventory</mat-icon>
+        <mat-label>CNPJ</mat-label>
+        <input matInput name="cnpj" [(ngModel)]="xmgoiFormFields.cnpj" [matAutocomplete]="autocompleteCnpj">
+        <mat-icon matSuffix>badge</mat-icon>
 
-        <mat-autocomplete #autocompleteProducts="matAutocomplete">
-          <mat-option
-            value="5430"
-          >
-            Ola
+        <mat-autocomplete #autocompleteCnpj="matAutocomplete">
+          <mat-option *ngFor="let customerRow of customersData" [value]="customerRow.cnpj">
+            {{customerRow.cnpj}}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Mercadoria</mat-label>
+        <input [(ngModel)]="xmgoiFormFields.productCode" matInput name="productCode">
+
+        <mat-icon matSuffix>inventory</mat-icon>
+      </mat-form-field>
     </div>
 
-    <div style="align-self: center">
-      <p class="barcode" style="margin: 0">*{{productIdInput}}*</p>
+    <div class="submit-button-wrapper">
+      <button type="submit" mat-stroked-button color="primary" [class.spinner]="waitingResponse" [disabled]="waitingResponse">Pesquisar</button>
     </div>
-  </div>
+  </form>
+
+  <app-xmgoi-preview-product-row [productRow]="productRow" />
 </div>

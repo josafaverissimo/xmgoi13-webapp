@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
-import { XmgoiApiService } from "../../services/xmgoi-api.service";
 import {MatPaginator, MatPaginatorIntl, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {CustomMatPaginatorIntl} from "../../shared/custom-mat-paginator-intl";
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -17,6 +16,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -30,7 +30,8 @@ import {MatButtonModule} from "@angular/material/button";
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    FormsModule
   ],
   providers: [{
     provide: MatPaginatorIntl,
@@ -47,12 +48,12 @@ export class MyTableComponent implements OnInit, AfterViewInit {
   @Input() itemsPerPage: number = 0
   @Input() isLoading: boolean = false
   @ViewChild(MatPaginator) paginator!: MatPaginator
-  @ViewChild('searchInput') searchInput: any
 
   public offset = 0
   public columnsNameList: string[] = []
-
-  constructor(private xmgoiApi: XmgoiApiService) {}
+  public searchInput: string = ''
+  private lastSearchInput: string = ''
+  private searchTermValue: string = ''
 
   ngOnInit(): void {
     this.dataSource = {
@@ -63,10 +64,14 @@ export class MyTableComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.paginator.page.subscribe((event: PageEvent) => {
+    this.paginator.page.subscribe(() => {
+      if(this.searchTermValue !== this.lastSearchInput) {
+        this.paginator.pageIndex = 0
+      }
+
       this.changePage.emit({
-        pageEvent: event,
-        termValue: this.getTermValue()
+        pageEvent: this.paginator,
+        termValue: this.searchTermValue
       })
     })
   }
@@ -77,18 +82,23 @@ export class MyTableComponent implements OnInit, AfterViewInit {
     }, [])
   }
 
-  private getTermValue(): string {
-    return this.searchInput.nativeElement.value
-  }
-
   searchTermHandler(): void {
-    const value = this.getTermValue()
-    this.searchTerm.emit(value)
+    this.searchTermValue = this.searchInput
+
+    if(this.searchTermValue !== this.lastSearchInput) {
+      this.paginator.pageIndex = 0
+      this.lastSearchInput = this.searchTermValue
+    }
+
+    this.searchTerm.emit({
+      pageEvent: this.paginator,
+      termValue: this.searchTermValue
+    })
   }
 
   clearTerm(): void {
-    this.searchInput.nativeElement.value = ''
-    this.searchTerm.emit('')
+    this.searchInput = ''
+    this.searchTerm.emit()
   }
 }
 

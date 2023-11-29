@@ -25,7 +25,8 @@ class Smgoi13 extends Controller
         $this->smg13ColumnsToPersist = new Smg13ColumnsToPersist();
     }
 
-    private function uploadSmg13(): array {
+    private function uploadSmg13(): array
+    {
         if(!isset($_FILES['smg13'])) {
             return [
                 "error" => true,
@@ -48,7 +49,8 @@ class Smgoi13 extends Controller
         ];
     }
 
-    private function getSmg13CsvData(): array {
+    private function getSmg13CsvData(): array
+    {
         $smg13FileTarget = CONF_UPLOAD_DIR . "/smg13.csv";
         $smg13FileStream = fopen($smg13FileTarget, 'rb');
 
@@ -64,7 +66,8 @@ class Smgoi13 extends Controller
         return $this->smg13ColumnsToPersist->getSmg13Data();
     }
 
-    public function getAll(int $offset, int $rowCount = 25): void {
+    public function getAll(int $offset, int $rowCount = 25): void
+    {
         $smg13QueryOptions = [
             'count' => true,
             'limit' => "{$rowCount} OFFSET {$offset}"
@@ -120,6 +123,17 @@ class Smgoi13 extends Controller
             'totalRows' => $smg13TotalRows,
             'data' => $smg13Data
         ]);
+    }
+
+    public function getByProductCode(string $productCode): void
+    {
+        $productRow = $this->smgoi13Model->getBy('productCode', $productCode);
+
+        if(empty($productRow)) {
+            return;
+        }
+
+        $this->output($productRow->getRow());
     }
 
     public function update(): void

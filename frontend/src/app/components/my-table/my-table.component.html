@@ -4,17 +4,21 @@
   </div>
 
   <div class="my-table-container">
-    <div class="my-table-actions">
-      <mat-form-field appearance="outline">
-        <mat-label>Pesquisar</mat-label>
-        <input matInput name="search" #searchInput>
-        <button matSuffix mat-icon-button (click)="searchTermHandler()">
-          <mat-icon>search</mat-icon>
-        </button>
-        <button matSuffix mat-icon-button (click)="clearTerm()">
-          <mat-icon>clear</mat-icon>
-        </button>
-      </mat-form-field>
+    <div class="wrapper-my-table-actions">
+      <div class="my-table-actions">
+        <form (ngSubmit)="searchTermHandler()">
+          <mat-form-field appearance="outline">
+            <mat-label>Pesquisar</mat-label>
+            <input matInput [(ngModel)]="searchInput" name="search">
+            <button matSuffix mat-icon-button type="submit">
+              <mat-icon>search</mat-icon>
+            </button>
+            <button matSuffix mat-icon-button type="button" (click)="clearTerm()">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </mat-form-field>
+        </form>
+      </div>
     </div>
 
     <table mat-table [dataSource]="dataSource.data">

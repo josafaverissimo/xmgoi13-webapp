@@ -5,6 +5,7 @@ use Src\Core\Router\Router;
 $router = new Router();
 
 $router->group(["prefix" => "smgoi13"], function() {
+    $this->get('/getByProductCode/(:numeric)', 'Smgoi13:getByProductCode');
     $this->get('/getAll/(:numeric)', "Smgoi13:getAll");
     $this->get('/getAll/(:numeric)/(:numeric)', "Smgoi13:getAll");
     $this->get('/getAll/(:numeric)/(:numeric)/(:any)', "Smgoi13:getAll");
@@ -12,7 +13,8 @@ $router->group(["prefix" => "smgoi13"], function() {
 });
 
 $router->group(["prefix" => "customers"], function() {
-   $this->post('/create', "Customers:create");
+    $this->get('/getAll', "Customers:getAll");
+    $this->post('/create', "Customers:create");
 });
 
 $router->dispatch();

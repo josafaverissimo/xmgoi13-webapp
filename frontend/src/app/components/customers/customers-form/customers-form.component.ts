@@ -5,6 +5,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import {NgxMaskDirective, provideNgxMask} from "ngx-mask";
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
@@ -36,7 +37,10 @@ export class CustomersFormComponent {
     email: ''
   }
 
-  constructor(private xmgoiApi: XmgoiApiService) {}
+  constructor(
+    private xmgoiApi: XmgoiApiService,
+    private snackBar: MatSnackBar
+  ) {}
 
   private getCustomerFormData(): FormData {
     const customerFormData = new FormData()
@@ -55,6 +59,17 @@ export class CustomersFormComponent {
 
     this.xmgoiApi.createCustomer(customerFormData).subscribe(response => {
       this.waitingResponse = false
+      let message = 'Cadastro realizado com sucesso'
+
+      if(response.error) {
+        message = 'Houve um erro ao salvar os dados :('
+      }
+
+      this.snackBar.open(message, 'Fechar', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 2000
+      })
     })
   }
 }

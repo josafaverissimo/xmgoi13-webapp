@@ -13,6 +13,7 @@ import { MyFileUploadComponent } from "./components/my-file-upload/my-file-uploa
 import { MyTableComponent } from "./components/my-table/my-table.component";
 import { HttpClientModule } from '@angular/common/http'
 import {CustomersFormComponent} from "./components/customers/customers-form/customers-form.component";
+import {FooterComponent} from "./components/footer/footer.component";
 
 @NgModule({
   declarations: [
@@ -20,19 +21,20 @@ import {CustomersFormComponent} from "./components/customers/customers-form/cust
     XmgoiPageComponent,
     CustomersPageComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        XmgoiFormComponent,
-        HeaderComponent,
-        HttpClientModule,
-        MyFileUploadComponent,
-        MyTableComponent,
-        XmgoiDatabaseManagerComponent,
-        CustomersFormComponent
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    XmgoiFormComponent,
+    HeaderComponent,
+    HttpClientModule,
+    MyFileUploadComponent,
+    MyTableComponent,
+    XmgoiDatabaseManagerComponent,
+    CustomersFormComponent,
+    FooterComponent
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

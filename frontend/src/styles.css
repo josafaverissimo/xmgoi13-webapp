@@ -35,3 +35,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-top-color: #000000;
   animation: spinner .8s linear infinite;
 }
+
+.barcode {
+  font-size: 3em;
+  font-family: '3of9Barcode';
+}
+
+.italic {
+  font-style: italic;
+}

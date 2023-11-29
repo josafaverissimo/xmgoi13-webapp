@@ -21,11 +21,18 @@
   justify-content: center;
 }
 
-.my-table-actions {
+.wrapper-my-table-actions {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+}
+
+.my-table-actions form {
   padding: 10px 5px 0 5px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  justify-content: center;
 }
 
 .no-data-message {

@@ -4,9 +4,8 @@
   <form (ngSubmit)="submitForm()">
     <app-my-file-upload style="align-self: stretch;" (changeFile)="onChangeFile($event)" />
 
-    <button type="submit" mat-fab color="primary">
-      <mat-icon>send</mat-icon>
-      <mat-spinner strokeWidth="4" *ngIf="isSmg13Uploading"></mat-spinner>
+    <button type="submit" mat-raised-button color="primary" [class.spinner]="isSmg13Uploading" [disabled]="isSmg13Uploading">
+      Enviar
     </button>
   </form>
 

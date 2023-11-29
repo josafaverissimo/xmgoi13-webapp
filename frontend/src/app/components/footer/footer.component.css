@@ -1,0 +1,18 @@
+.container {
+  position: fixed;
+  left: 1.85%;
+  bottom: 0;
+  background: #fff;
+  width: 95%;
+  padding: 0 10px;
+  border-radius: 0 10px;
+
+}
+
+.container p {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #777;
+}

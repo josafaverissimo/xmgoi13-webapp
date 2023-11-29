@@ -67,15 +67,25 @@ export class XmgoiDatabaseManagerComponent {
     })
   }
 
-  smg13TableSearchTerm(term: string): void {
-    this.setSmg13TableData(term)
+  smg13TableSearchTerm(changePageEvent: ChangePageEvent|undefined): void {
+    if(!changePageEvent) {
+      this.smg13TableOffset = 0
+      this.setSmg13TableData()
+
+      return
+    }
+
+    const {pageEvent, termValue} = changePageEvent
+    this.smg13TableItemsPerPage = pageEvent.pageSize
+    this.smg13TableOffset = pageEvent.pageIndex * this.smg13TableItemsPerPage
+    this.setSmg13TableData(termValue)
   }
 
   smg13TableChangePage(changePageEvent: ChangePageEvent): void {
     const {pageEvent, termValue} = changePageEvent
     this.smg13TableItemsPerPage = pageEvent.pageSize
     this.smg13TableOffset = pageEvent.pageIndex * this.smg13TableItemsPerPage
-    console.log(pageEvent.pageIndex, pageEvent.pageIndex)
+    
     this.setSmg13TableData(termValue.toLocaleLowerCase())
   }
 
