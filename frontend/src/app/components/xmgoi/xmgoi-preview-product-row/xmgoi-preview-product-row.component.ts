@@ -18,5 +18,5 @@ export class XmgoiPreviewProductRowComponent {
     }
   }
   dataSource: Smg13RowInterface[] = []
-  columnsToDisplay: string[] = ['productCode', 'productDigit', 'productDescription', 'productPacking', 'productCodeBar']
+  columnsToDisplay: string[] = ['productCode', 'productDescription', 'productPacking', 'productCodeBar']
 }

@@ -1,13 +1,8 @@
 <div class="container mat-elevation-z3">
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="productCode">
-      <th mat-header-cell *matHeaderCellDef>Código</th>
-      <td mat-cell *matCellDef="let productRow">{{productRow.productCode}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="productDigit">
-      <th mat-header-cell *matHeaderCellDef>Dígito</th>
-      <td mat-cell *matCellDef="let productRow">{{productRow.productDigit}}</td>
+      <th mat-header-cell *matHeaderCellDef>Código-Dígito</th>
+      <td mat-cell *matCellDef="let productRow">{{productRow.productCode}}-{{productRow.productDigit}}</td>
     </ng-container>
 
     <ng-container matColumnDef="productDescription">

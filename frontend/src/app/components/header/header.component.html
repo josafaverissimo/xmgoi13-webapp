@@ -4,7 +4,7 @@
       <span>Xmgoi Web App</span>
     </mat-toolbar>
   </div>
-  <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <nav class="mat-elevation-z1" mat-tab-nav-bar [tabPanel]="tabPanel">
       <a *ngFor="let link of links"
         mat-tab-link
         [routerLink]="link.target"
