@@ -1,0 +1,29 @@
+.container {
+  padding: 0 20px;
+}
+
+.packing-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.packing-list-header h1 {
+  font-size: 2rem;
+  font-weight: lighter;
+}
+
+.packing-list-header .customer-id {
+  display: flex;
+  flex-direction: column;
+}
+
+.packing-list-sub-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.packing-list-sub-header {
+  font-size: 1.3rem;
+  border-bottom: 1px solid #eee;
+}

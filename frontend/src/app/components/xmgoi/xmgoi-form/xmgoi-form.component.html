@@ -1,6 +1,6 @@
 <div class="container">
-  <form (ngSubmit)="formSubmitHandler()">
-    <div class="inputs-wrapper">
+  <div class="forms-wrapper">
+    <form (ngSubmit)="cnpjSubmit()">
       <mat-form-field appearance="outline">
         <mat-label>CNPJ</mat-label>
         <input matInput name="cnpj" [(ngModel)]="xmgoiFormFields.cnpj" [matAutocomplete]="autocompleteCnpj">
@@ -13,18 +13,18 @@
         </mat-autocomplete>
       </mat-form-field>
 
+      <button mat-stroked-button color="primary">Inserir CNPJ</button>
+    </form>
+
+    <form (ngSubmit)="productCodeSubmit()">
       <mat-form-field appearance="outline">
         <mat-label>Mercadoria</mat-label>
         <input [(ngModel)]="xmgoiFormFields.productCode" matInput name="productCode">
 
         <mat-icon matSuffix>inventory</mat-icon>
       </mat-form-field>
-    </div>
 
-    <div class="submit-button-wrapper">
-      <button type="submit" mat-stroked-button color="primary" [class.spinner]="waitingResponse" [disabled]="waitingResponse">Pesquisar</button>
-    </div>
-  </form>
-
-  <app-xmgoi-preview-product-row [productRow]="productRow" />
+      <button type="submit" mat-stroked-button color="primary" [class.spinner]="waitingResponse" [disabled]="waitingResponse">Pesquisar Mercadoria</button>
+    </form>
+  </div>
 </div>

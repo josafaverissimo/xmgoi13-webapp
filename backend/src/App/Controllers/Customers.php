@@ -35,6 +35,21 @@ class Customers extends Controller
         return $this->formValidation->validate();
     }
 
+    public function getByCnpj(string $cnpj) {
+        $customerOrm = $this->customerModel->getBy("cnpj", $cnpj);
+
+        if(empty($customerOrm)) {
+            $this->output([
+                'error' => true,
+                'message' => 'customer not found'
+            ]);
+
+            return;
+        }
+
+        $this->output($customerOrm->getRow());
+    }
+
     public function getAll(): void
     {
         $customersData = array_map(function(Orm $orm) {

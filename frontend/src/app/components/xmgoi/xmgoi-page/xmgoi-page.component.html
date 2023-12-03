@@ -1,3 +1,7 @@
 <h1 class="page-title">Romaneio</h1>
 
-<app-xmgoi-form />
+<div class="xmgoi-wrapper">
+  <app-xmgoi-form (onCnpjSubmit)="setCnpjValue($event)" (onProductCodeSubmit)="searchProductByCode($event)"/>
+  <app-xmgoi-preview-product-row (onDataRowSubmit)="pushProductInPackingList($event)" [productRow]="productRow" />
+  <app-xmgoi-packing-list [customerId]="cnpj" [packingList]="packingList"/>
+</div>

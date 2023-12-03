@@ -13,6 +13,7 @@ $router->group(["prefix" => "smgoi13"], function() {
 });
 
 $router->group(["prefix" => "customers"], function() {
+    $this->get('/getByCnpj/(:numeric)', "Customers:getByCnpj");
     $this->get('/getAll', "Customers:getAll");
     $this->post('/create', "Customers:create");
 });

@@ -130,6 +130,10 @@ class Smgoi13 extends Controller
         $productRow = $this->smgoi13Model->getBy('productCode', $productCode);
 
         if(empty($productRow)) {
+            $this->output([
+                'error' => true,
+                'message' => 'product not found'
+            ]);
             return;
         }
 

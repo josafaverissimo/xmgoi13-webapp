@@ -25,5 +25,10 @@
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
   </table>
+
   <p class="no-data-message" *ngIf="dataSource.length === 0">Nenhum produto selecionado</p>
+</div>
+
+<div class="add-button-container">
+  <button mat-stroked-button color="primary" type="button" (click)="dataRowSubmit()">Adicionar</button>
 </div>

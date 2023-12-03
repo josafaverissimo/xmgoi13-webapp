@@ -1,0 +1,21 @@
+<div class="container mat-elevation-z3">
+  <div class="packing-list-header">
+    <img ngSrc="/assets/imgs/atacadao-logo.svg" height="48" width="153" alt="Logo atacadao"/>
+
+    <h1>Pedido para faturar</h1>
+
+    <div class="customer-id">
+      <span>CPF/CNPJ</span>
+      <span>{{customerId}}</span>
+    </div>
+  </div>
+  <div class="packing-list-sub-header">
+    <p>{{customerSocialReason}}</p>
+
+    <p>{{currentDateTime}}</p>
+  </div>
+
+  <div>
+    <app-xmgoi-products-table [dataSource]="packingList"/>
+  </div>
+</div>

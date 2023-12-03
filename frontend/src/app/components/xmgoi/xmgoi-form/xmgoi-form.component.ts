@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {XmgoiApiService, CustomerRowInterface, Smg13RowInterface} from '../../../services/xmgoi-api.service'
 import {MatInputModule} from '@angular/material/input';
@@ -31,6 +31,8 @@ import { MatSnackBar } from "@angular/material/snack-bar";
   styleUrl: './xmgoi-form.component.css'
 })
 export class XmgoiFormComponent {
+  @Output() onCnpjSubmit: EventEmitter<any> = new EventEmitter()
+  @Output() onProductCodeSubmit: EventEmitter<any> = new EventEmitter()
   xmgoiFormFields: XmgoiFormFieldsInterface = {
     cnpj: '',
     productCode: ''
@@ -48,29 +50,12 @@ export class XmgoiFormComponent {
     })
   }
 
-  formSubmitHandler() {
-    if(this.xmgoiFormFields.productCode.length === 0) {
-      this.snackBar.open('Informe a Mercadoria', 'Fechar', {
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        duration: 3000
-      })
-      return
-    }
+  productCodeSubmit() {
+    this.onProductCodeSubmit.emit(this.xmgoiFormFields.productCode)
+  }
 
-    this.waitingResponse = true
-    this.xmgoiApi.getProductDataByCode(this.xmgoiFormFields.productCode).subscribe(productRow => {
-      if(!productRow) {
-        this.snackBar.open('Mercadoria não encontrada', 'Fechar', {
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-          duration: 3000
-        })
-      }
-
-      this.productRow = productRow
-      this.waitingResponse = false
-    })
+  cnpjSubmit() {
+    this.onCnpjSubmit.emit(this.xmgoiFormFields.cnpj)
   }
 }
 

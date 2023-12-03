@@ -41,6 +41,12 @@ export class XmgoiApiService {
     return this.http.get<Smg13RowInterface>(url)
   }
 
+  getCustomerByCnpj(cnpj: string): Observable<CustomerRowInterface> {
+    const url = this.getUrl(`customers/getByCnpj/${cnpj}`)
+
+    return this.http.get<CustomerRowInterface>(url)
+  }
+
   getCustomersData(): Observable<CustomerRowInterface[]> {
     const url = this.getUrl('customers/getAll')
 
@@ -74,4 +80,9 @@ export interface CustomerRowInterface {
   email: string;
   createdAt: string;
   lastPurchaseDay: string;
+}
+
+export interface ErrorInterface {
+  error: boolean;
+  message: string;
 }

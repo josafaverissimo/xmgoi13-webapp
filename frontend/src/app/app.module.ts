@@ -12,8 +12,12 @@ import { XmgoiDatabaseManagerComponent } from './components/xmgoi/xmgoi-database
 import { MyFileUploadComponent } from "./components/my-file-upload/my-file-upload.component";
 import { MyTableComponent } from "./components/my-table/my-table.component";
 import { HttpClientModule } from '@angular/common/http'
-import {CustomersFormComponent} from "./components/customers/customers-form/customers-form.component";
-import {FooterComponent} from "./components/footer/footer.component";
+import { CustomersFormComponent } from "./components/customers/customers-form/customers-form.component";
+import { FooterComponent } from "./components/footer/footer.component";
+import { XmgoiPackingListComponent } from './components/xmgoi/xmgoi-packing-list/xmgoi-packing-list.component'
+import {
+    XmgoiPreviewProductRowComponent
+} from "./components/xmgoi/xmgoi-preview-product-row/xmgoi-preview-product-row.component";
 
 @NgModule({
   declarations: [
@@ -21,20 +25,22 @@ import {FooterComponent} from "./components/footer/footer.component";
     XmgoiPageComponent,
     CustomersPageComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    XmgoiFormComponent,
-    HeaderComponent,
-    HttpClientModule,
-    MyFileUploadComponent,
-    MyTableComponent,
-    XmgoiDatabaseManagerComponent,
-    CustomersFormComponent,
-    FooterComponent
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        XmgoiFormComponent,
+        HeaderComponent,
+        HttpClientModule,
+        MyFileUploadComponent,
+        MyTableComponent,
+        XmgoiDatabaseManagerComponent,
+        CustomersFormComponent,
+        FooterComponent,
+        XmgoiPackingListComponent,
+        XmgoiPreviewProductRowComponent
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
