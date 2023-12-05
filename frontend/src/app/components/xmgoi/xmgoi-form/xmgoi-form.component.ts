@@ -33,6 +33,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 export class XmgoiFormComponent {
   @Output() onCnpjSubmit: EventEmitter<any> = new EventEmitter()
   @Output() onProductCodeSubmit: EventEmitter<any> = new EventEmitter()
+  @Output() onAddProductSubmit: EventEmitter<any> = new EventEmitter()
   xmgoiFormFields: XmgoiFormFieldsInterface = {
     cnpj: '',
     productCode: ''
@@ -56,6 +57,10 @@ export class XmgoiFormComponent {
 
   cnpjSubmit() {
     this.onCnpjSubmit.emit(this.xmgoiFormFields.cnpj)
+  }
+
+  addProductSubmit() {
+    this.onAddProductSubmit.emit(this.xmgoiFormFields.productCode)
   }
 }
 

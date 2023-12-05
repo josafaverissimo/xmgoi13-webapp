@@ -21,13 +21,14 @@ export class XmgoiPageComponent {
     this.cnpj = cnpj
   }
 
-  searchProductByCode(productCode: string) {
+  searchProductByCode(productCode: string, callback: Function|undefined = undefined) {
     if(productCode.length === 0) {
       this.snackBar.open('Informe a Mercadoria', 'Fechar', {
         horizontalPosition: 'center',
         verticalPosition: 'top',
         duration: 3000
       })
+
       return
     }
 
@@ -43,6 +44,16 @@ export class XmgoiPageComponent {
       }
 
       this.productRow = productRow
+
+      if(callback) {
+        callback(productRow)
+      }
+    })
+  }
+
+  searchProductAndAddInPackingList(productCode: string) {
+    this.searchProductByCode(productCode, (productRow: Smg13RowInterface) => {
+      this.pushProductInPackingList(productRow)
     })
   }
 
