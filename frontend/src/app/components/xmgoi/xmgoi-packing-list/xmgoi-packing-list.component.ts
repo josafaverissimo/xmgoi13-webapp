@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, OnChanges, ViewChild, ElementRef} from '@angular/core';
+import {Component, Input, OnInit, OnChanges, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import {CommonModule, NgOptimizedImage, DatePipe } from '@angular/common';
 import {Smg13RowInterface, XmgoiApiService} from "../../../services/xmgoi-api.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -16,6 +16,7 @@ import { GeneratePdfService } from "../../../services/generate-pdf.service";
   styleUrl: './xmgoi-packing-list.component.css'
 })
 export class XmgoiPackingListComponent implements OnChanges, OnInit {
+  @Output() onPackingListChange: EventEmitter<any> = new EventEmitter()
   @Input() customerId: string = ''
   @Input() packingList: Smg13RowInterface[] = []
   @ViewChild('packingListContainer') packingListContainer!: ElementRef<HTMLDivElement>
@@ -52,6 +53,11 @@ export class XmgoiPackingListComponent implements OnChanges, OnInit {
 
       this.customerSocialReason = customerRow.socialReason
     })
+  }
+
+  setPackingList(packingList: Smg13RowInterface[]) {
+    this.packingList = packingList
+    this.onPackingListChange.emit(packingList)
   }
 
   generatePackingListPdf() {

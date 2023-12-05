@@ -7,5 +7,5 @@
     (onAddProductSubmit)="searchProductAndAddInPackingList($event)"
   />
   <app-xmgoi-preview-product-row (onDataRowSubmit)="pushProductInPackingList($event)" [productRow]="productRow" />
-  <app-xmgoi-packing-list [customerId]="cnpj" [packingList]="packingList"/>
+  <app-xmgoi-packing-list [customerId]="cnpj" [packingList]="packingList" (onPackingListChange)="setPackingList($event)"/>
 </div>

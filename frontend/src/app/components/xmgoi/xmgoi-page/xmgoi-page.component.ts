@@ -17,6 +17,10 @@ export class XmgoiPageComponent {
     private xmgoiApi: XmgoiApiService
   ) {}
 
+  setPackingList(packingList: Smg13RowInterface[]) {
+    this.packingList = packingList
+  }
+
   setCnpjValue(cnpj: string): void {
     this.cnpj = cnpj
   }

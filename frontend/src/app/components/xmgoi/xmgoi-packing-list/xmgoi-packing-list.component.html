@@ -26,6 +26,6 @@
   </div>
 
   <div class="products-table-wrapper">
-    <app-xmgoi-products-table [dataSource]="packingList"/>
+    <app-xmgoi-products-table [dataSource]="packingList" (onDataSourceChange)="setPackingList($event)"/>
   </div>
 </div>

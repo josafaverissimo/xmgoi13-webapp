@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import {Component, Input, Output, OnChanges, SimpleChanges, EventEmitter} from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CommonModule } from '@angular/common';
 import { Smg13RowInterface } from "../../../services/xmgoi-api.service";
@@ -15,6 +15,7 @@ import {MatButtonModule} from "@angular/material/button";
   styleUrl: './xmgoi-products-table.component.css'
 })
 export class XmgoiProductsTableComponent implements OnChanges {
+  @Output() onDataSourceChange: EventEmitter<any> = new EventEmitter()
   @Input() dataSource: Smg13RowInterface[] = []
   productsRowsWeakMap: WeakMap<Smg13RowInterface, ProductSaleData> = new WeakMap()
   columnsToDisplay: string[] = [
@@ -30,15 +31,31 @@ export class XmgoiProductsTableComponent implements OnChanges {
   rowsSelection = new SelectionModel<Smg13RowInterface>(true, [])
   totalProductsValue: number = 0
 
-  ngOnChanges() {
+  ngOnChanges(changes:SimpleChanges) {
+    //@ts-ignore
+    if(changes.dataSource) {
+      this.setProductsRowsWeakMap()
+    }
+  }
+
+  private setProductsRowsWeakMap() {
+    const tempWeakMap: WeakMap<Smg13RowInterface, ProductSaleData> = new WeakMap()
+
     this.dataSource.forEach(smg13Row => {
-      if(!this.productsRowsWeakMap.has(smg13Row)) {
-        this.productsRowsWeakMap.set(smg13Row, {
-          productAmount: 0,
-          productValue: 0
-        })
+      let productSaleData: ProductSaleData = {
+        productAmount: 0,
+        productValue: 0
       }
+
+      if(this.productsRowsWeakMap.has(smg13Row)) {
+        //@ts-ignore
+        productSaleData = this.productsRowsWeakMap.get(smg13Row)
+      }
+
+      tempWeakMap.set(smg13Row, productSaleData)
     })
+
+    this.productsRowsWeakMap = tempWeakMap
   }
 
   getProductSaleDataTotal(productRow: Smg13RowInterface) {
@@ -112,13 +129,13 @@ export class XmgoiProductsTableComponent implements OnChanges {
       const isSelected = this.rowsSelection.isSelected(smg13Row)
       this.rowsSelection.deselect(smg13Row)
 
-      if(!isSelected) {
-        this.productsRowsWeakMap.delete(smg13Row)
-        this.setTotalProductsValue()
-      }
-
       return !isSelected
     })
+
+    this.setProductsRowsWeakMap()
+    this.setTotalProductsValue()
+
+    this.onDataSourceChange.emit(this.dataSource)
   }
 }
 
