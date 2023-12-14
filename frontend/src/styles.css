@@ -37,8 +37,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .barcode {
-  font-size: 3em;
+  font-size: 3em !important;
   font-family: '3 of 9 Barcode';
+}
+
+.big-barcode {
+  font-size: 5em !important;
+  font-family: '3 of 9 Barcode';
+  padding: 0.9em 0;
 }
 
 .italic {

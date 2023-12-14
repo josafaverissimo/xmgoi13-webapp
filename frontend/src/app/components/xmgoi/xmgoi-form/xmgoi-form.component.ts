@@ -47,7 +47,7 @@ export class XmgoiFormComponent {
     private snackBar: MatSnackBar
   ) {
     this.xmgoiApi.getCustomersData().subscribe(customersData => {
-      this.customersData = customersData
+      this.customersData = customersData.data
     })
   }
 

@@ -18,6 +18,7 @@ import { XmgoiPackingListComponent } from './components/xmgoi/xmgoi-packing-list
 import {
     XmgoiPreviewProductRowComponent
 } from "./components/xmgoi/xmgoi-preview-product-row/xmgoi-preview-product-row.component";
+import { CustomersTableComponent } from './components/customers/customers-table/customers-table.component';
 
 @NgModule({
   declarations: [
@@ -25,22 +26,23 @@ import {
     XmgoiPageComponent,
     CustomersPageComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        XmgoiFormComponent,
-        HeaderComponent,
-        HttpClientModule,
-        MyFileUploadComponent,
-        MyTableComponent,
-        XmgoiDatabaseManagerComponent,
-        CustomersFormComponent,
-        FooterComponent,
-        XmgoiPackingListComponent,
-        XmgoiPreviewProductRowComponent
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    XmgoiFormComponent,
+    HeaderComponent,
+    HttpClientModule,
+    MyFileUploadComponent,
+    MyTableComponent,
+    XmgoiDatabaseManagerComponent,
+    CustomersFormComponent,
+    FooterComponent,
+    XmgoiPackingListComponent,
+    XmgoiPreviewProductRowComponent,
+    CustomersTableComponent
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

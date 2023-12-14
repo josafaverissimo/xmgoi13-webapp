@@ -26,6 +26,11 @@ abstract class Model
         return new Sql();
     }
 
+    public function getCurrentQuery(): string
+    {
+        return $this->sql->getQuery();
+    }
+
     public function getLastQuery(): string
     {
         return $this->sql->getLastQuery();
@@ -104,6 +109,15 @@ abstract class Model
         $this->sql->insert($this->table, $valuesByColumns)->execute();
 
         return $this->sql->lastInsertId();
+    }
+
+    public function update(array $set, array $where): int
+    {
+        $this->sql->update($this->table, $set)
+            ->where($where["column"], $where["value"])
+            ->execute();
+
+        return $this->sql->affectedRows();
     }
 
     public function delete(): int

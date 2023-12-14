@@ -1,3 +1,6 @@
 <h1 class="page-title">Cliente</h1>
 
-<app-customers-form />
+<div class="container">
+    <app-customers-form (onCreateCustomer)="refreshCustomerTable()" />
+    <app-customers-table #appCustomersTable />
+</div>

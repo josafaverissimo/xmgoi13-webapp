@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { XmgoiApiService } from "../../../services/xmgoi-api.service";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -28,6 +28,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
   styleUrl: './customers-form.component.css'
 })
 export class CustomersFormComponent {
+  @Output() onCreateCustomer: EventEmitter<any> = new EventEmitter()
   waitingResponse = false
   customerFieldsValues: CustomerFormFields = {
     name: '',
@@ -63,6 +64,8 @@ export class CustomersFormComponent {
 
       if(response.error) {
         message = 'Houve um erro ao salvar os dados :('
+      } else {
+        this.onCreateCustomer.emit()
       }
 
       this.snackBar.open(message, 'Fechar', {

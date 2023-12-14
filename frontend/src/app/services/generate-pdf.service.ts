@@ -8,7 +8,7 @@ import html2canvas from "html2canvas";
 export class GeneratePdfService {
   constructor() {}
 
-  generatePdfFromHtml(html: HTMLDivElement) {
+  generatePdfFromHtml(html: HTMLDivElement, filename: string = 'new-file') {
     html2canvas(html).then(canvas => {
       const imgWidth = 190
       const pageHeight = 290
@@ -27,7 +27,7 @@ export class GeneratePdfService {
         pdf.addImage(contentDataURL, 'PNG', 10, position, imgWidth, imgHeight)
         heightLeft -= pageHeight
       }
-      pdf.save('new-file.pdf')
+      pdf.save(`${filename}.pdf`)
     })
   }
 }

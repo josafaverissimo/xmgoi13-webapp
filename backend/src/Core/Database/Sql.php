@@ -18,6 +18,10 @@ final class Sql
         $this->valuesToBind = [];
     }
 
+    private function bindValues(array $values) {
+        $this->valuesToBind = array_merge($this->valuesToBind, $values);
+    }
+
     public function query(string $query): Sql
     {
         $this->query = $query;
@@ -96,8 +100,22 @@ final class Sql
         $boundColumns = array_map(fn($column) => ":{$column}", $columns);
         $implodedBoundColumns = implode(",", $boundColumns);
 
-        $this->valuesToBind = array_combine($boundColumns, array_values($valuesByColumns));
+        $this->bindValues(array_combine($boundColumns, array_values($valuesByColumns)));
         $this->query = "INSERT INTO {$table} ({$implodedColumns}) VALUES ({$implodedBoundColumns})";
+
+        return $this;
+    }
+
+    public function update($table, array $set): Sql
+    {
+        $columnsNames = array_keys($set);
+        $setString = implode(",", array_map(function($columnName) {
+            return "{$columnName} = :{$columnName}";
+        }, $columnsNames));
+        $boundColumns = array_map(fn($column) => ":{$column}", $columnsNames);
+        $this->bindValues(array_combine($boundColumns, array_values($set)));
+
+        $this->query = "UPDATE {$table} SET {$setString}";
 
         return $this;
     }
@@ -114,6 +132,7 @@ final class Sql
                 $this->query
             );
             $this->query = "";
+            $this->valuesToBind = [];
         } catch(\PDOException $exception) {
             $this->error = $exception->errorInfo;
         }

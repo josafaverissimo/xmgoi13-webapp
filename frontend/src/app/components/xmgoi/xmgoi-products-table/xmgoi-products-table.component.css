@@ -1,16 +1,22 @@
 th, td {
   text-align: center;
-  height: 10px;
+  height: 100%;
+  padding: 0.5em 0px;
 }
 
 .input-wrapper {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: stretch;
   height: 80%;
 }
-input {
+
+.input-wrapper input  {
   border: 1px solid #000;
-  height: 100%;
   text-align: center;
+}
+
+.total-price {
+  font-size: 1.5em;
+  font-weight: bold;
 }

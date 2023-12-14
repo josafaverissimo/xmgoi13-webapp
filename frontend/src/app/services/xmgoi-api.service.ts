@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import {TableDataInterface} from "../components/my-table/my-table.component";
+import { TableDataInterface } from "../components/my-table/my-table.component";
 
 @Injectable({
   providedIn: 'root'
 })
 export class XmgoiApiService {
-  private baseUrl = "http://localhost:8080/"
+  private baseUrl = "https://localhost:8080/"
 
   constructor(private http: HttpClient) {}
 
@@ -47,16 +47,41 @@ export class XmgoiApiService {
     return this.http.get<CustomerRowInterface>(url)
   }
 
-  getCustomersData(): Observable<CustomerRowInterface[]> {
-    const url = this.getUrl('customers/getAll')
+  getCustomersData(
+    offset: number|undefined = undefined,
+    rowsCount: number|undefined = undefined,
+    term: string|undefined = undefined
+  ): Observable<TableDataInterface> {
+    let endpoint = 'customers/getAll'
 
-    return this.http.get<CustomerRowInterface[]>(url)
+    if(offset !== undefined) {
+      endpoint += `/${offset}`
+    }
+
+    if(rowsCount !== undefined) {
+      endpoint += `/${rowsCount}`
+    }
+
+    if(term !== undefined) {
+      endpoint += `?term=${term}`
+    }
+
+    const url = this.getUrl(endpoint)
+
+    return this.http.get<TableDataInterface>(url)
   }
 
   createCustomer(customerData: FormData): Observable<any> {
     const url = this.getUrl('customers/create')
 
     return this.http.post<any>(url, customerData)
+  }
+
+  updateCustomerLastPurchaseDay(cnpj: string): Observable<ErrorInterface> {
+    console.log(cnpj)
+    const url = this.getUrl(`customers/updateLastPurchaseDay/${cnpj}`)
+
+    return this.http.get<ErrorInterface>(url)
   }
 }
 

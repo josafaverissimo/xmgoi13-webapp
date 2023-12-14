@@ -50,14 +50,67 @@ class Customers extends Controller
         $this->output($customerOrm->getRow());
     }
 
-    public function getAll(): void
+    public function getAll(int $offset = -1, int $rowCount = 25): void
     {
+        $customersQueryOptions = [];
+
+        if($offset !== -1) {
+            $customersQueryOptions = [
+                'count' => true,
+                'limit' => "{$rowCount} OFFSET {$offset}"
+            ];
+        }
+        
+        $term = filter_input(INPUT_GET, 'term');
+
+        if(!empty($term)) {
+            $customersQueryOptions["multipleWhere"] = true;
+            $customersQueryOptions['where'] = [
+                [
+                    "comparison" => "name like ",
+                    "value" => "%{$term}%",
+                    "operator" => "OR"
+                ],
+                [
+                    "comparison" => "socialReason like ",
+                    "value" => "%{$term}%",
+                    "operator" => "OR"
+                ],
+                [
+                    "comparison" => "cnpj like ",
+                    "value" => "%{$term}%",
+                    "operator" => "OR"
+                ],
+                [
+                    "comparison" => "phone like ",
+                    "value" => "%{$term}%",
+                    "operator" => "OR"
+                ],
+                [
+                    "comparison" => "email like ",
+                    "value" => "%{$term}%",
+                    "operator" => "OR"
+                ],
+                [
+                    "comparison" => "createdAt like ",
+                    "value" => "%{$term}%",
+                    "operator" => "OR"
+                ],
+                [
+                    "comparison" => "lastPurchaseDay like ",
+                    "value" => "%{$term}%"
+                ]
+            ];
+        }
         $customersData = array_map(function(Orm $orm) {
             return $orm->getRow();
-        }, $this->customerModel->getAll());
+        }, $this->customerModel->getAll($customersQueryOptions));
+        $customersDataTotalRows = $this->customerModel->getTotalRows($customersQueryOptions);
 
-
-        $this->output($customersData);
+        $this->output([
+            "totalRows" => $customersDataTotalRows,
+            "data" => $customersData
+        ]);
     }
 
     public function create(): void
@@ -93,6 +146,26 @@ class Customers extends Controller
 
         $this->output([
             'error' => empty($lastInsertId)
+        ]);
+    }
+
+    public function updateLastPurchaseDay(string $customerDocument): void
+    {
+        $customerDocument = filter_var($customerDocument, FILTER_SANITIZE_SPECIAL_CHARS);
+
+        $set = [
+            "lastPurchaseDay" => date('Y-m-d H:i:s')
+        ];
+
+        $where = [
+            "column" => "cnpj",
+            "value" => $customerDocument
+        ];
+
+        $affectedRows = $this->customerModel->update($set, $where);
+
+        $this->output([
+            'error' => !($affectedRows > 0)
         ]);
     }
 }

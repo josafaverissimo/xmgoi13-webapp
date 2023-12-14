@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { CustomersTableComponent } from '../customers-table/customers-table.component';
 
 @Component({
   selector: 'app-customers-page',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './customers-page.component.css'
 })
 export class CustomersPageComponent {
+  @ViewChild('appCustomersTable', {static: false}) customersTable!: CustomersTableComponent
 
+  refreshCustomerTable() {
+    this.customersTable.refreshTableData()
+  }
 }

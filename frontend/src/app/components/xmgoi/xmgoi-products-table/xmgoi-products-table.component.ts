@@ -66,6 +66,10 @@ export class XmgoiProductsTableComponent implements OnChanges {
     return productSaleData!.productValue * productSaleData!.productAmount
   }
 
+  formatNumberToBr(number: number): string {
+    return number.toFixed(2).replace('.', ',')
+  }
+
   updateProductAmount(productRow: Smg13RowInterface, event: Event) {
     //@ts-ignore
     const amountValue = event.target.value
@@ -82,7 +86,7 @@ export class XmgoiProductsTableComponent implements OnChanges {
 
   updateProductValue(productRow: Smg13RowInterface, event: Event) {
     //@ts-ignore
-    const productValue = event.target.value
+    const productValue = event.target.value.replace(',', '.')
     const productSaleData = this.productsRowsWeakMap.get(productRow)
 
     //@ts-ignore
@@ -99,10 +103,7 @@ export class XmgoiProductsTableComponent implements OnChanges {
     this.totalProductsValue = this.dataSource.reduce((total, smg13Row) => {
       const productSaleData = this.productsRowsWeakMap.get(smg13Row)
 
-      if(!productSaleData) {
-        console.log(this.dataSource)
-        return total
-      }
+      if(!productSaleData) return total
 
       return total + (productSaleData!.productValue * productSaleData!.productAmount)
     }, 0)

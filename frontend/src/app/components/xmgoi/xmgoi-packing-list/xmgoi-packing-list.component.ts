@@ -60,11 +60,35 @@ export class XmgoiPackingListComponent implements OnChanges, OnInit {
     this.onPackingListChange.emit(packingList)
   }
 
+  updateCustomerLastPurchaseDay() {
+    console.log(this.customerId)
+    this.xmgoiApi.updateCustomerLastPurchaseDay(this.customerId).subscribe(response => {
+      if(response.error) {
+        this.snackBar.open('Houve um erro ao registrar o romaneio', 'Fechar', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          duration: 2000
+        })
+
+        return
+      }
+
+      this.snackBar.open('Romaneio registrado com sucesso', 'Fechar', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 2000
+      })
+    })
+  }
+
   generatePackingListPdf() {
     const html: HTMLDivElement = this.packingListContainer.nativeElement
     //@ts-ignore
     html.querySelector('.table-actions').style.display = "none"
     html.classList.remove('mat-elevation-z3')
+
+    //@ts-ignore
+    html.querySelectorAll('th,td:not(.barcode):not(.total-price)').forEach(element => element.style.fontSize = '1.3em')
 
     html.querySelectorAll<HTMLDivElement>('.input-wrapper').forEach(div => {
       const input = div.querySelector<HTMLInputElement>('input')
@@ -74,10 +98,18 @@ export class XmgoiPackingListComponent implements OnChanges, OnInit {
 
       spanElement.textContent = inputValue
       input!.style.display = 'none'
+      div.style.display = 'flex'
+      div.style.justifyContent = 'center'
+      div.style.alignItems = 'center'
       div.appendChild(spanElement)
     })
 
-    this.generatePdf.generatePdfFromHtml(html)
+    html.querySelectorAll(".barcode").forEach(barcode => {
+      barcode.classList.remove('barcode')
+      barcode.classList.add('big-barcode')
+    })
+
+    this.generatePdf.generatePdfFromHtml(html, `romaneio_${this.customerId}`)
     //@ts-ignore
     html.querySelector('.table-actions').style.display = "block"
     html.classList.add('mat-elevation-z3')
@@ -87,6 +119,14 @@ export class XmgoiPackingListComponent implements OnChanges, OnInit {
       input!.style.display = 'block'
 
       div.querySelector('span')!.remove()
+    })
+
+    //@ts-ignore
+    html.querySelectorAll('th,td:not(.barcode):not(.total-price)').forEach(element => element.style.fontSize = '1em')
+
+    html.querySelectorAll(".big-barcode").forEach(barcode => {
+      barcode.classList.remove('big-barcode')
+      barcode.classList.add('barcode')
     })
   }
 }

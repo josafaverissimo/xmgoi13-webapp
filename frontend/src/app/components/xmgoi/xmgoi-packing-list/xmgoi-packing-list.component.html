@@ -5,6 +5,8 @@
   >
     Salvar como PDF
   </button>
+
+  <button mat-flat-button color="primary" (click)="updateCustomerLastPurchaseDay()">Registrar Romaneio</button>
 </div>
 
 <div class="container mat-elevation-z3" #packingListContainer>
@@ -14,7 +16,7 @@
     <h1>Pedido para faturar</h1>
 
     <div class="customer-id">
-      <span>CNPJ</span>
+      <span *ngIf="customerId">CNPJ</span>
       <span>{{customerId}}</span>
     </div>
   </div>

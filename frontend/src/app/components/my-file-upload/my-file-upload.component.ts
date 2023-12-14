@@ -11,7 +11,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class MyFileUploadComponent {
   @Output() changeFile: EventEmitter<any> = new EventEmitter()
-  file!: File
+  file: File|undefined
 
   constructor(private snackBar: MatSnackBar) {}
 
@@ -30,7 +30,9 @@ export class MyFileUploadComponent {
   }
 
   private getFileSizeMB(): number|undefined {
-    return this.file?.size / 1024 / 1024
+    if(!this.file) return undefined
+
+    return this.file.size / 1024 / 1024
   }
 
   getFileSizeMBFormatted(): string|undefined {

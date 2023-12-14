@@ -9,13 +9,12 @@ class Smg13ColumnsToPersist
 
     public function __construct() {
         $this->columnsToPersist = [
-            "productCode" => ["index" => 5],
-            "productDigit" => ["index" => 6],
-            "productDescription" => ["index" => 8],
-            "productPacking" => ["index" => 9],
-            "productStockEmb1" => ["index" => 22],
-            "productStockEmb9" => ["index" => 23],
-            "productSalePrice" => ["index" => 25, "formatValue" => fn($value) => str_replace(',', '.', $value)]
+            "productCodeDigit" => ["index" => 0],
+            "productDescription" => ["index" => 2],
+            "productPacking" => ["index" => 3],
+            "productStockEmb1" => ["index" => 21],
+            "productStockEmb9" => ["index" => 22],
+            "productSalePrice" => ["index" => 24, "formatValue" => fn($value) => str_replace(',', '.', $value)]
         ];
     }
 
@@ -25,7 +24,7 @@ class Smg13ColumnsToPersist
 
     public function getSmg13Data(): array {
         return array_reduce($this->rows, function($rows, $row) {
-            $rowsFiltered = array_reduce(array_keys($this->columnsToPersist), function($columns, $column) use ($row) {
+            $rowFiltered = array_reduce(array_keys($this->columnsToPersist), function($columns, $column) use ($row) {
                 $columnTarget = $this->columnsToPersist[$column]["index"];
                 $cell = mb_convert_case(
                     preg_replace("/ +/", " ", trim($row[$columnTarget])),
@@ -38,8 +37,13 @@ class Smg13ColumnsToPersist
 
                 return array_merge($columns, [$column => $cell]);
             }, []);
+           
+            $productCodeDigitExploded = explode('-', $rowFiltered['productCodeDigit']);
+            $rowFiltered['productCode'] = $productCodeDigitExploded[0];
+            $rowFiltered['productDigit'] = $productCodeDigitExploded[1];
+            unset($rowFiltered['productCodeDigit']);
 
-            return array_merge($rows, [$rowsFiltered]);
+            return array_merge($rows, [$rowFiltered]);
         }, []);
     }
 }
