@@ -1,5 +1,7 @@
-# Xmgoi Webapp
+# Xmgoi Webapp (descontinuado)
 
+[Novo repositório](https://github.com/josafaverissimo/pd-order)
+ 
 O objetivo do projeto é melhorar o processo atual para gerar a lista de produtos e manter a base de dados dos clientes.
 
 Atualmente, o sistema consegue gerar o pdf da lista de itens, manter a base de dados dos clientes e a base de dados dos produtos da filial.
